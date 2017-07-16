@@ -1,0 +1,44 @@
+package br.com.maframanager.service;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import br.com.maframanager.model.User;
+
+@Service
+public class UserService {
+	
+	Map<Integer, User> users = new HashMap<>();
+	Integer nextID = 0;
+	
+private User register(User user) {
+		
+		user.setId(nextID);
+		nextID++;
+		users.put(user.getId(), user);
+		return user;
+	}
+	
+	
+	private Collection<User> searchAll(){
+		return users.values();
+	}
+	
+	private User remove(User user) {
+		users.remove(user.getId());
+		return user;
+	}
+	
+	private User getUserById(Integer id) {
+		return users.get(id);
+	}
+	
+	private void update(User user) {
+		
+		users.put(user.getId(), user);
+	}
+
+}

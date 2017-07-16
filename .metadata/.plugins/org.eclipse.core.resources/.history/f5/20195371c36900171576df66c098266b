@@ -1,0 +1,17 @@
+package br.com.maframanager.service;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.stereotype.Service;
+
+import br.com.maframanager.model.User;
+
+@Service
+public class UserService {
+	
+	Map<Integer, User> users = new HashMap<>();
+	Integer nextID = 0;
+	
+
+}

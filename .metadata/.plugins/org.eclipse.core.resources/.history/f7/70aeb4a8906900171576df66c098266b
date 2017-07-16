@@ -1,0 +1,5 @@
+package br.com.maframanager.model;
+
+public class User {
+
+}

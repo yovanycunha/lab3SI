@@ -1,0 +1,4 @@
+spring.datasource.url=jdbc:postgresql://localhost:5432/managerdb
+spring.datasource.data-username=postgres
+spring.datasource.data-password=pandorah
+spring.jpa.hibernate.ddl-auto=create-drop

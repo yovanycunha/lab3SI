@@ -1,0 +1,70 @@
+package br.com.maframanager.controller;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.maframanager.model.User;
+
+@RestController
+public class UserController {
+	
+	Map<Integer, User> users = new HashMap<>();
+	Integer nextID = 0;
+	
+	
+	//regras de negocios
+	private User register(User user) {
+		
+		user.setId(nextID);
+		nextID++;
+		users.put(user.getId(), user);
+		return user;
+	}
+	
+	
+	private Collection<User> searchAll(){
+		return users.values();
+	}
+	
+	private User remove(User user) {
+		users.remove(user);
+		return user;
+	}
+	
+	
+	//end points
+	@RequestMapping(value="/users", method=RequestMethod.POST,
+			consumes=MediaType.APPLICATION_JSON_UTF8_VALUE,
+			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)	
+	
+	public ResponseEntity<User> registerUser(@RequestBody User user) {
+		User registeredUser = this.register(user);
+		return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);	
+	}
+	
+	@RequestMapping(value="/users", method=RequestMethod.GET,
+			consumes=MediaType.APPLICATION_JSON_UTF8_VALUE,
+			produces=MediaType.APPLICATION_JSON_UTF8_VALUE)
+	
+	public ResponseEntity<Collection<User>> searchAllUsers() {
+		Collection<User> myUsers = this.searchAll();
+		return new ResponseEntity<>(myUsers, HttpStatus.FOUND);
+	}
+	
+	@RequestMapping(value="/users", method=RequestMethod.DELETE
+	public ResponseEntity<User> removeUser (@RequestBody User user) {
+		User removedUser = this.remove(user);
+		return new ResponseEntity<>(removedUser, HttpStatus.OK);
+	}
+
+	
+}
